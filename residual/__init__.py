@@ -1,2 +1,2 @@
-from residual_block import ResidualBlock
+from .residual_block import ResidualBlock
 
