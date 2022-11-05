@@ -1,0 +1,7 @@
+setup.py
+residual/__init__.py
+residual/residual_block.py
+residual.egg-info/PKG-INFO
+residual.egg-info/SOURCES.txt
+residual.egg-info/dependency_links.txt
+residual.egg-info/top_level.txt
