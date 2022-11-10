@@ -1,7 +1,17 @@
+from dataclasses import dataclass
 import numpy as np
 import torch
 from torch import nn
 from torch.nn import functional as F
+
+
+@dataclass
+class ResidualConfig:
+    channels: int
+    conv_kernel_size: int
+    in_size: tuple = None
+    skip_kernel_size: int = None
+    stride: int = 1
 
 
 class ResidualBlock(nn.Module):
@@ -46,12 +56,38 @@ class ResidualBlock(nn.Module):
         return F.relu(f + s)
 
 
-class ResnetLayer(nn.Module):
-    pass
+class ResidualLayer(nn.Module):
+    """
+    A residual layer consists of two residual blocks with the same kernel sizes
+    """
+    #def __init__(self, in_size, channels, conv_kernel_size, skip_kernel_size=None, stride=1):
+    def __init__(self, config: ResidualConfig):
+        super().__init__()
+        self.channels = config.channels
+        self.block1 = ResidualBlock(
+                    config.in_size,
+                    config.channels,
+                    config.conv_kernel_size,
+                    config.skip_kernel_size,
+                    config.stride
+                )
+        self.block2 = ResidualBlock(
+                    config.in_size,
+                    config.channels,
+                    config.conv_kernel_size,
+                    config.skip_kernel_size,
+                    config.stride
+                )
+    
+    def forward(self, x):
+        x = self.block1(x)
+        x = self.block2(x)
+        return x
 
 
 # some basic tests
-block = ResidualBlock((4, 3, 7, 7), channels=3, conv_kernel_size=1, skip_kernel_size=5)
-x = torch.randn(4, 3, 7, 7)
-block.forward(x)
+#block = ResidualBlock((4, 3, 7, 7), channels=3, conv_kernel_size=1, skip_kernel_size=5)
+#layer = ResidualLayer(in_size=(4, 3, 7, 7), channels=3, conv_kernel_size=1, skip_kernel_size=1)
+#x = torch.randn(4, 3, 7, 7)
+#layer.forward(x)
 
