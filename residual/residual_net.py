@@ -19,10 +19,11 @@ class ResNet(nn.Module):
     
     def make_body(self, in_size):
         self.body = nn.Sequential()
+        in_channels = in_size[1]
         for i, config in enumerate(self.configs):
-            config.in_size = in_size
+            config.in_size = (in_size[0], in_channels, in_size[2], in_size[3])
             self.body.add_module(f'body_{i}', ResidualLayer(config))
-            in_size = (in_size[0], config.channels, in_size[2], in_size[3])
+            in_channels = config.channels
     
     def make_tail(self):
         last_body_piece = list(self.body.children())[-1]

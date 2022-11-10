@@ -71,6 +71,7 @@ class ResidualLayer(nn.Module):
                     config.skip_kernel_size,
                     config.stride
                 )
+        config.in_size = (config.in_size[0], config.channels, config.in_size[2], config.in_size[3])
         self.block2 = ResidualBlock(
                     config.in_size,
                     config.channels,

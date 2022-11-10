@@ -17,7 +17,7 @@ def test_basic_functionality():
                     ),
 
                 ResidualConfig(
-                        channels=64,
+                        channels=128,
                         conv_kernel_size=3,
                         skip_kernel_size=1
                     )
@@ -26,8 +26,23 @@ def test_basic_functionality():
     model = ResNet(data_shape, 10, configs=layers)
     data = torch.randn(data_shape)
     out = model.forward(data)
-    import pdb; pdb.set_trace()
 
+
+def resnet18_test():
+    resnet18_config = [
+      ResidualConfig(channels=64, conv_kernel_size=3, skip_kernel_size=1),
+      ResidualConfig(channels=128, conv_kernel_size=3, skip_kernel_size=1, stride=2),
+      ResidualConfig(channels=256, conv_kernel_size=3, skip_kernel_size=1),
+      ResidualConfig(channels=256, conv_kernel_size=3, skip_kernel_size=1),
+      ResidualConfig(channels=512, conv_kernel_size=3, skip_kernel_size=1)
+    ]
+
+    data_shape = (1, 3, 100, 100)
+    data = torch.randn(data_shape)
+    out_shape = 10
+
+    resnet18 = ResNet(data_shape, out_shape, configs=resnet18_config)
+    resnet18.forward(data)
 
 
 
