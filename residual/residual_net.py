@@ -32,9 +32,9 @@ class ResNet(nn.Module):
         channel_size = last_body_piece.channels
         pool_kernel = (self.average_pool_kernel_size, self.average_pool_kernel_size)
         self.tail = nn.Sequential(
-                    nn.AdaptiveAvgPool2d(pool_kernel).to(device),
-                    nn.Flatten().to(device),
-                    nn.Linear(channel_size, self.out_size).to(device)
+                    nn.AdaptiveAvgPool2d(pool_kernel).to(self.device),
+                    nn.Flatten().to(self.device),
+                    nn.Linear(channel_size, self.out_size).to(self.device)
                 )
         #self.tail.add_module('avg_pool', nn.AdaptiveAvgPool2d(pool_kernel))
 
