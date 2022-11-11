@@ -7,7 +7,8 @@ from .residual_block import ResidualLayer
 class ResNet(nn.Module):
     def __init__(self, in_size, out_size, configs, average_pool_kernel_size=1, device='cpu'):
         super().__init__()
-        in_channels = in_size[1]
+        self.in_size = in_size
+        in_channels = self.in_size[1]
         self.head = nn.Sequential(
                 nn.Conv2d(in_channels, 64, kernel_size=7, stride=2, padding=3).to(device),
                 nn.BatchNorm2d(64).to(device),
@@ -36,11 +37,20 @@ class ResNet(nn.Module):
                     nn.Flatten().to(self.device),
                     nn.Linear(channel_size, self.out_size).to(self.device)
                 )
-        #self.tail.add_module('avg_pool', nn.AdaptiveAvgPool2d(pool_kernel))
 
+
+    def compile(self):
+        """
+        pass some sample data through the model to build all the models components
+        """
+        data = torch.randn(self.in_size).to(self.device)
+        self.forward(data)
+        assert hasattr(self, 'body')
+        assert hasattr(self, 'tail')
 
     def forward(self, x):
         x = self.head(x)
+
         # lazily create the body of the model
         if not hasattr(self, 'body'):
             self.make_body(x.shape)
