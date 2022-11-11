@@ -41,8 +41,8 @@ class ResidualBlock(nn.Module):
                         stride=stride,
                         bias=False,
                         padding=skip_padding
-                        )
-                    ).to(device)
+                        ).to(device)
+                    )
             skip_modules.append(nn.BatchNorm2d(channels).to(device))
         self.skip_block = nn.Sequential(*skip_modules)
 
