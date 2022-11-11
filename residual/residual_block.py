@@ -15,18 +15,18 @@ class ResidualConfig:
 
 
 class ResidualBlock(nn.Module):
-    def __init__(self, in_size, channels, conv_kernel_size, skip_kernel_size=None, stride=1):
+    def __init__(self, in_size, channels, conv_kernel_size, skip_kernel_size=None, stride=1, device='cpu'):
         super().__init__()
 
         in_channels = in_size[1]
         dims = in_size[-1]
         main_padding = self.compute_padding(dims, conv_kernel_size, stride)
         self.main_block = nn.Sequential(
-                nn.Conv2d(in_channels, channels, kernel_size=conv_kernel_size, stride=stride, bias=False, padding=main_padding),
-                nn.BatchNorm2d(channels),
-                nn.ReLU(),
-                nn.Conv2d(channels, channels, kernel_size=conv_kernel_size, stride=stride, bias=False, padding=main_padding),
-                nn.BatchNorm2d(channels)
+                nn.Conv2d(in_channels, channels, kernel_size=conv_kernel_size, stride=stride, bias=False, padding=main_padding).to(device),
+                nn.BatchNorm2d(channels).to(device),
+                nn.ReLU().to(device),
+                nn.Conv2d(channels, channels, kernel_size=conv_kernel_size, stride=stride, bias=False, padding=main_padding).to(device),
+                nn.BatchNorm2d(channels).to(device)
             )
 
         
@@ -61,7 +61,7 @@ class ResidualLayer(nn.Module):
     A residual layer consists of two residual blocks with the same kernel sizes
     """
     #def __init__(self, in_size, channels, conv_kernel_size, skip_kernel_size=None, stride=1):
-    def __init__(self, config: ResidualConfig):
+    def __init__(self, config: ResidualConfig, device='cpu'):
         super().__init__()
         self.channels = config.channels
         self.block1 = ResidualBlock(
@@ -69,7 +69,8 @@ class ResidualLayer(nn.Module):
                     config.channels,
                     config.conv_kernel_size,
                     config.skip_kernel_size,
-                    config.stride
+                    config.stride,
+                    device=device
                 )
         config.in_size = (config.in_size[0], config.channels, config.in_size[2], config.in_size[3])
         self.block2 = ResidualBlock(
@@ -77,7 +78,8 @@ class ResidualLayer(nn.Module):
                     config.channels,
                     config.conv_kernel_size,
                     config.skip_kernel_size,
-                    config.stride
+                    config.stride,
+                    device=device
                 )
     
     def forward(self, x):
