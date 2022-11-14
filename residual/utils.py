@@ -15,7 +15,7 @@ class Trainer:
             testset,
             learning_rate=0.01,
             average_pool_kernel_size=1,
-            batch_size=4
+            batch_size=4,
             patience=0,
             min_delta=0,
             checkpoint_path='.',
