@@ -5,6 +5,6 @@ setup(
     version='0.0',
     description='implementation of residual blocks and basic residual networks',
     packages=['residual'],
-    install_requires=['torch']
+    install_requires=['torch', 'torchsummary']
 )
 

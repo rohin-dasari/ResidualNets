@@ -1,6 +1,7 @@
 import torch
 from torch import nn
 from torch.nn import functional as F
+from torchsummary import summary
 from .residual_block import ResidualLayer
 
 
@@ -19,6 +20,7 @@ class ResNet(nn.Module):
         self.configs = configs
         self.average_pool_kernel_size = average_pool_kernel_size
         self.device = device
+        self.compile()
     
     def make_body(self, in_size):
         self.body = nn.Sequential()
@@ -63,4 +65,11 @@ class ResNet(nn.Module):
             self.make_tail()
             
         return self.tail(x)
+
+
+    def get_parameter_count(self):
+        return sum(dict((p.data_ptr(), p.numel()) for p in self.parameters()).values())
+
+    def summary(self):
+        summary(self, input_size=(self.in_size[1:]))
 
