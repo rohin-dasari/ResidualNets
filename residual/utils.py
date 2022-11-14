@@ -139,7 +139,7 @@ class Trainer:
         return False
 
 
-    def train(epochs):
+    def train(self, epochs):
         for epoch in range(epochs):
             start = time.time()
             train_loss, train_acc = self.train_step()
