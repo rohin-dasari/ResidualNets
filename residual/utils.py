@@ -38,7 +38,6 @@ class Trainer:
         self.wait = 0
         self.patience = patience
         self.best = float('inf')
-        self.best_epoch = 0
         self.min_delta = min_delta
         self.checkpoint_path = checkpoint_path
         self.verbosity = verbosity
@@ -132,7 +131,6 @@ class Trainer:
         self.wait += 1
         if self.curr_train_loss - self.min_delta < self.best:
             self.best = self.curr_train_loss
-            self.best_epoch = epoch
             torch.save(self.model, Path(self.checkpoint_path, f'best_model.pt'))
             self.wait = 0
 
@@ -167,8 +165,7 @@ class Trainer:
             else:
                 # if not using early stopping, just save the best model
                 if self.curr_train_loss < self.best:
-                    self.best = self.curr_train
-                    self.best_epoch = epoch
+                    self.best = self.curr_train_loss
                     torch.save(self.model, Path(self.checkpoint_path, f'best_model.pt'))
 
 
