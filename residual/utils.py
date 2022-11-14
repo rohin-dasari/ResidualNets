@@ -71,7 +71,7 @@ class Trainer:
         return (1, *images[0].shape)
 
 
-    def accuracy(y_pred, y):
+    def accuracy(self, y_pred, y):
         top_pred = y_pred.argmax(1, keepdim=True)
         correct = top_pred.eq(y.view_as(top_pred)).sum()
         acc = correct.float() / y.shape[0]
