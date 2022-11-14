@@ -29,7 +29,7 @@ class Trainer:
                     in_size = self.get_input_dims(trainset),
                     out_size = n_classes,
                     configs = model_config,
-                    average_pool_kernel_size = average_pool_kernel_size
+                    average_pool_kernel_size = average_pool_kernel_size,
                     device = self.device
                 )
         self.optimizer = getattr(torch.optim, optimizer)(self.model.parameters(), lr=learning_rate)
