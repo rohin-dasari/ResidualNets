@@ -131,7 +131,7 @@ class Trainer:
         self.wait += 1
         if self.curr_train_loss - self.min_delta < self.best:
             self.best = self.curr_train_loss
-            torch.save(self.model, Path(checkpoint_path, f'best_model_epoch_{epoch}.pt'))
+            torch.save(self.model, Path(self.checkpoint_path, f'best_model_epoch_{epoch}.pt'))
             self.wait = 0
 
         if self.wait >= self.patience and epoch > 0:
@@ -165,10 +165,10 @@ class Trainer:
             else:
                 # if not using early stopping, just save the best model
                 self.best = self.curr_train_loss
-                torch.save(self.model, Path(checkpoint_path, f'best_model_epoch_{epoch}.pt'))
+                torch.save(self.model, Path(self.checkpoint_path, f'best_model_epoch_{epoch}.pt'))
 
 
-        torch.save(self.model, Path(checkpoint_path, f'final_model.pt'))
+        torch.save(self.model, Path(self.checkpoint_path, f'final_model.pt'))
         return self.history
 
 
