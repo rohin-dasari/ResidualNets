@@ -77,7 +77,7 @@ class Trainer:
         acc = correct.float() / y.shape[0]
         return acc
 
-    def train_step():
+    def train_step(self):
         epoch_loss = 0
         epoch_acc = 0
 
@@ -104,7 +104,7 @@ class Trainer:
         return epoch_loss / len(self.trainloader), epoch_acc / len(self.trainloader)
 
 
-    def eval_step():
+    def eval_step(self):
         epoch_loss = 0
         epoch_acc = 0
 
