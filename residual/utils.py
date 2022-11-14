@@ -157,7 +157,7 @@ class Trainer:
                         f'train accuracy: {train_acc}, ' + \
                         f'validation loss: {val_loss}, ' + \
                         f'validation accuracy: {val_acc}, ' + \
-                        f'elapsed: {elapsed_time}')
+                        f'elapsed: {elapsed_formatted}')
 
             # if patience is 0, assume user doesn't want to early stop
             if self.patience > 0 and self.early_stop(epoch):
