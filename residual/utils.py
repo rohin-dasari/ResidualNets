@@ -26,7 +26,7 @@ class Trainer:
         self.trainloader  = self.build_dataloader(trainset)
         self.testloader  = self.build_dataloader(testset)
         self.model = ResNet(
-                    in_size = self.get_input_dims(trainset),
+                in_size = self.get_input_dims(self.trainloader),
                     out_size = n_classes,
                     configs = model_config,
                     average_pool_kernel_size = average_pool_kernel_size,

@@ -46,10 +46,6 @@ def test_resnet18():
 def test_model_summary():
     resnet18_config = [
       ResidualConfig(channels=64, conv_kernel_size=3, skip_kernel_size=1),
-      ResidualConfig(channels=128, conv_kernel_size=3, skip_kernel_size=1, stride=2),
-      ResidualConfig(channels=256, conv_kernel_size=3, skip_kernel_size=1),
-      ResidualConfig(channels=256, conv_kernel_size=3, skip_kernel_size=1),
-      ResidualConfig(channels=512, conv_kernel_size=3, skip_kernel_size=1)
     ]
     data_shape = (1, 3, 100, 100)
     data = torch.randn(data_shape)
