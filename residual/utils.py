@@ -108,7 +108,7 @@ class Trainer:
         epoch_loss = 0
         epoch_acc = 0
 
-        model.eval()
+        self.model.eval()
 
         with torch.no_grad():
             for (x, y) in self.testloader:
