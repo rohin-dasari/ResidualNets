@@ -67,7 +67,7 @@ class Trainer:
                 num_workers=2)
 
     def get_input_dims(self, dataset):
-        images, labels = next(iter(dataset)))
+        images, labels = next(iter(dataset))
         return (1, *images[0].shape)
 
 
