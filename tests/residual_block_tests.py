@@ -11,9 +11,9 @@ def test_shape_consistency():
 
     config = ResidualConfig(
             in_size=data_shape,
-            channels=128,
+            channels=64,
             conv_kernel_size=3,
-            skip_kernel_size=1
+            skip_kernel_size=None
         )
 
     layer = ResidualLayer(config)

@@ -39,16 +39,10 @@ class Trainer:
         self.patience = patience
         self.best = float('inf')
         self.min_delta = min_delta
-        self.checkpoint_path = checkpoint_path
+        self.checkpoint_path = Path(checkpoint_path)
+        self.checkpoint_path.mkdir(parents=True, exist_ok=True)
         self.verbosity = verbosity
-        self.history = {}
-        self.history['train'] = {}
-        self.history['train']['loss'] = []
-        self.history['train']['acc'] = []
-        self.history['val'] = {}
-        self.history['val']['loss'] = []
-        self.history['val']['acc'] = []
-
+        self.reset_history()
 
     def reset_history(self):
         self.history = {}
@@ -139,7 +133,10 @@ class Trainer:
         return False
 
 
-    def train(self, epochs):
+    def train(self, epochs, resume_from_checkpoint=None):
+        if resume_from_checkpoint:
+            self.model.load_state_dict(torch.load(resume_from_checkpoint))
+
         for epoch in range(epochs):
             start = time.time()
             train_loss, train_acc = self.train_step()

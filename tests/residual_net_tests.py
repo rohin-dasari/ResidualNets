@@ -56,4 +56,18 @@ def test_model_summary():
     model.summary()
 
 
+def test_resnet_without_skip_conv():
+    config = [
+        ResidualConfig(channels=64, conv_kernel_size=3, skip_kernel_size=1),
+        ResidualConfig(channels=128, conv_kernel_size=3, stride=2, skip_kernel_size=1),
+        ResidualConfig(channels=256, conv_kernel_size=3),
+        ResidualConfig(channels=256, conv_kernel_size=3),
+        ResidualConfig(channels=512, conv_kernel_size=3)
+    ]
+
+    data_shape = (1, 3, 100, 100)
+    data = torch.randn(data_shape)
+    out_shape = 10
+
+    resnet18 = ResNet(data_shape, out_shape, configs=config)
 
