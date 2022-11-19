@@ -58,11 +58,11 @@ def test_model_summary():
 
 def test_resnet_without_skip_conv():
     config = [
-        ResidualConfig(channels=64, conv_kernel_size=3, skip_kernel_size=1),
-        ResidualConfig(channels=128, conv_kernel_size=3, stride=2, skip_kernel_size=1),
-        ResidualConfig(channels=256, conv_kernel_size=3),
-        ResidualConfig(channels=256, conv_kernel_size=3),
-        ResidualConfig(channels=512, conv_kernel_size=3)
+        ResidualConfig(channels=64, conv_kernel_size=3, skip_kernel_size=None),
+        ResidualConfig(channels=128, conv_kernel_size=3, skip_kernel_size=None, stride=2),
+        ResidualConfig(channels=256, conv_kernel_size=3, skip_kernel_size=None),
+        ResidualConfig(channels=256, conv_kernel_size=3, skip_kernel_size=None),
+        ResidualConfig(channels=512, conv_kernel_size=3, skip_kernel_size=None)
     ]
 
     data_shape = (1, 3, 100, 100)
