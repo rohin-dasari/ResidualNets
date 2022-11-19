@@ -31,6 +31,7 @@ class ResidualBlock(nn.Module):
 
         
         skip_modules = []
+        self.expansion = channels // in_channels
         if skip_kernel_size:
             skip_padding = self.compute_padding(dims, skip_kernel_size, stride)
             skip_modules.append(
@@ -44,15 +45,18 @@ class ResidualBlock(nn.Module):
                         ).to(device)
                     )
             skip_modules.append(nn.BatchNorm2d(channels).to(device))
+            self.expansion = 1
         self.skip_block = nn.Sequential(*skip_modules)
 
 
     def compute_padding(self, dims, kernel_size, stride):
+        assert kernel_size % 2 == 1, "kernel size must be an odd number"
         return (stride*(dims - 1) + kernel_size - dims) // 2
 
     def forward(self, x):
         f = self.main_block(x)
         s = self.skip_block(x)
+        s = s.repeat(1, self.expansion, 1, 1)
         return F.relu(f + s)
 
 
