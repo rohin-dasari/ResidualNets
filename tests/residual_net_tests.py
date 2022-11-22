@@ -69,5 +69,6 @@ def test_resnet_without_skip_conv():
     data = torch.randn(data_shape)
     out_shape = 10
 
-    resnet18 = ResNet(data_shape, out_shape, configs=config)
+    model = ResNet(data_shape, out_shape, configs=config)
+    print(model.get_parameter_count())
 
